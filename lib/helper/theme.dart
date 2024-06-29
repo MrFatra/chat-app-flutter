@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 ThemeData theme() {
@@ -13,20 +14,21 @@ ThemeData theme() {
       selectionHandleColor: Colors.blue,
       selectionColor: Colors.blue,
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: Colors.blue,
       iconTheme: IconThemeData(color: Colors.white),
+      titleTextStyle: kHeadingTextStyle.copyWith(color: Colors.white),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: Colors.blue,
     ),
     inputDecorationTheme: InputDecorationTheme(
-      suffixIconColor: MaterialStateColor.resolveWith(
+      suffixIconColor: WidgetStateColor.resolveWith(
         (states) {
           if (states
-              .containsAll([MaterialState.error, MaterialState.focused])) {
+              .containsAll([WidgetState.error, WidgetState.focused])) {
             return Colors.red;
-          } else if (states.contains(MaterialState.focused)) {
+          } else if (states.contains(WidgetState.focused)) {
             return Colors.blue;
           } else {
             return Colors.black45;
@@ -67,21 +69,21 @@ ThemeData theme() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Colors.blue),
+        foregroundColor: WidgetStateProperty.all(Colors.blue),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13)),
-        elevation: MaterialStateProperty.all(7),
-        backgroundColor: MaterialStateProperty.all(Colors.blue),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        textStyle: MaterialStateProperty.all(const TextStyle(
+        padding: WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 13)),
+        elevation: WidgetStateProperty.all(7),
+        backgroundColor: WidgetStateProperty.all(Colors.blue),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        textStyle: WidgetStateProperty.all(const TextStyle(
           fontWeight: FontWeight.w600,
           letterSpacing: .5,
           fontSize: 16,
         )),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -89,53 +91,53 @@ ThemeData theme() {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(Colors.blue),
+      fillColor: WidgetStateProperty.all(Colors.blue),
     ).copyWith(
-      fillColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return Colors.blue;
         }
         return null;
       }),
     ),
     radioTheme: RadioThemeData(
-      fillColor: MaterialStateProperty.all(Colors.blue),
+      fillColor: WidgetStateProperty.all(Colors.blue),
     ).copyWith(
-      fillColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return Colors.blue;
         }
         return null;
       }),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(Colors.blue),
-      trackColor: MaterialStateProperty.all(Colors.blue.withOpacity(0.5)),
+      thumbColor: WidgetStateProperty.all(Colors.blue),
+      trackColor: WidgetStateProperty.all(Colors.blue.withOpacity(0.5)),
     ).copyWith(
-      thumbColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      thumbColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return Colors.blue;
         }
         return null;
       }),
-      trackColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
+      trackColor: WidgetStateProperty.resolveWith<Color?>(
+          (Set<WidgetState> states) {
+        if (states.contains(WidgetState.disabled)) {
           return null;
         }
-        if (states.contains(MaterialState.selected)) {
+        if (states.contains(WidgetState.selected)) {
           return Colors.blue;
         }
         return null;
@@ -152,6 +154,11 @@ const TextStyle kBodyTextStyle = TextStyle(
 
 const TextStyle kBodyMediumTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
+  color: Colors.black87,
+);
+
+const TextStyle kBodySemiboldStyle = TextStyle(
+  fontWeight: FontWeight.w600,
   color: Colors.black87,
 );
 
