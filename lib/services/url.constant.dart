@@ -2,7 +2,7 @@
 
 class URL {
   static const SOCKET_HOST = 'http://192.168.100.32:3000'; // 10.0.2.2:3000
-  static const AUTH_URL = '$SOCKET_HOST/api/auth';
+  static const BASE_URL = '$SOCKET_HOST/api';
 }
 
 class Routes {
