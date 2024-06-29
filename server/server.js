@@ -1,7 +1,7 @@
 import express from 'express';
 import { METHODS, createServer } from 'http';
 import { Server } from 'socket.io';
-import { mongoConfig } from './cluster/cluster.js';
+import { mongoConfig } from './cluster/config.js';
 import 'dotenv/config'
 
 export const app = express();
