@@ -5,8 +5,6 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketController extends GetxController {
   late final IO.Socket _socket;
-
-  var messages = [].obs;
   var socketConnected = false.obs;
 
   @override
@@ -32,7 +30,6 @@ class SocketController extends GetxController {
     _socket.onConnect((_) {
       socketConnected.value = true;
       debugPrint('Connected to the server!');
-      newMessages();
       debugPrint('Your socket id is ${_socket.id}');
     });
 
@@ -63,24 +60,5 @@ class SocketController extends GetxController {
       socketConnected.value = false;
       debugPrint('Disconnected: $data');
     });
-  }
-
-  void sendMessage(String message) {
-    if (_socket.connected) {
-      _socket.emit('new message', message);
-    } else {
-      debugPrint('Message not sent.');
-    }
-  }
-
-  void newMessages() {
-    if (_socket.connected) {
-      _socket.on('new message', (data) {
-        debugPrint('new message: $data');
-        messages.add(data);
-      });
-    } else {
-      debugPrint('Unable to get messages.');
-    }
   }
 }
