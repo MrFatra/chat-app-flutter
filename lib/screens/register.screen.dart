@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../helper/theme.dart';
-import '../models/register.types.dart';
+import '../helper/types.dart';
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatelessWidget {
@@ -81,7 +81,7 @@ class RegisterScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(7),
                         ),
                       ),
-                      validator: (value) => registerValidator(value),
+                      validator: (value) => registerValidator(value, type: TForm.username),
                     ),
                     const SizedBox(height: 15), // Add some spacing between the fields
                     Obx(

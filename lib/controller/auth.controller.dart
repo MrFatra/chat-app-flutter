@@ -1,4 +1,4 @@
-import 'package:chat_app/models/register.types.dart';
+import 'package:chat_app/helper/types.dart';
 import 'package:chat_app/repository/auth.repository.dart';
 import 'package:chat_app/widgets/loading.dart';
 import 'package:chat_app/widgets/snackbar.dart';
@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/login.types.dart';
+import '../helper/types.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _authRepository = AuthRepository();

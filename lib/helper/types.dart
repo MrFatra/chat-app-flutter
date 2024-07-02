@@ -1,3 +1,19 @@
+class TLogin {
+  String username, password;
+
+  TLogin({
+    required this.username,
+    required this.password,
+  });
+
+  Map<String, dynamic> toJSON() {
+    return {
+      'username': username,
+      'password': password,
+    };
+  }
+}
+
 class TRegister {
   String fullName, username, password, confirmPassword, gender;
 
@@ -19,3 +35,4 @@ class TRegister {
     };
   }
 }
+

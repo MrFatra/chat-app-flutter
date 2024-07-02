@@ -1,7 +1,7 @@
 import 'package:chat_app/controller/auth.controller.dart';
 import 'package:chat_app/helper/validator.dart';
 import 'package:chat_app/helper/theme.dart';
-import 'package:chat_app/models/login.types.dart';
+import 'package:chat_app/helper/types.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
