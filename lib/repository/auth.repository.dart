@@ -1,18 +1,16 @@
 import 'package:chat_app/helper/handler.dart';
-import 'package:chat_app/models/register.types.dart';
+import 'package:chat_app/helper/types.dart';
 import 'package:chat_app/services/store.service.dart';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../models/login.types.dart';
+import '../helper/types.dart';
 import '../services/dio.service.dart';
 
 class AuthRepository {
   final AuthStorage _authStorage = Get.find<AuthStorage>();
   final DioService _dio = DioService();
-  final _cookieJar = CookieJar();
 
   Future<void> register(TRegister credentials) async {
     try {
@@ -40,8 +38,6 @@ class AuthRepository {
 
       if (request.statusCode == 200) {
         final String token = request.data['token'];
-
-        debugPrint('cookie: ' + (await _cookieJar.loadForRequest(Uri.parse("http://localhost:3000/api/auth/login"))).toString());
 
         debugPrint(request.data['token'].toString());
 
