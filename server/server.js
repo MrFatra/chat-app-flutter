@@ -28,11 +28,11 @@ io.on('connection', (socket) => {
     io.emit('online users', Object.keys(usersSocketMap))
 
 
-    // socket.on('new message', (message) => {
-    //     console.log(`new message on id: ${socket.id}`)
-    //     console.log('Message ' + message)
-    //     io.emit('new message', message)
-    // });
+    socket.on('new message', (message) => {
+        console.log(`new message on id: ${socket.id}`)
+        console.log('Message ' + message)
+        io.emit('new message', message)
+    });
 
     socket.on('disconnect', () => {
         delete usersSocketMap[userId]
