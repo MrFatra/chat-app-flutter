@@ -7,4 +7,9 @@ class URL {
 
 class Routes {
   static const splash = '/splash';
+  static const noConnection = '/no-connection';
+  static const root = '/';
+  static const chat = '/chat';
+  static const register = '/register';
+  static const login = '/login';
 }
