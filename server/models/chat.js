@@ -7,7 +7,7 @@ const ChatModel = mongoose.Schema({
         required: true,
     }],
     messages: [{
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'messages',
         default: [],
     }]

@@ -27,9 +27,9 @@ export const onSendMessage = async (req, res) => {
 
         if (!newMessage || !participants) throw new Error('Cannot send message, please try again.')
 
-        participants.messages.push(message)
+        participants.messages.push(newMessage._id)
 
-        Promise.all([participants.save(), newMessage.save()])
+        await Promise.all([participants.save(), newMessage.save()])
 
         const receiverSocketId = getReceiverSocketId(receiverId)
         if (receiverSocketId) {
@@ -47,14 +47,34 @@ export const onSendMessage = async (req, res) => {
 
 export const onGetMessages = async (req, res) => {
     try {
+        const { id } = req.params
         const senderId = req.user._id
-        const { id: receiverId } = req.params
 
-        const messages = await Message.find({ senderId, receiverId })
+        if (!id) {
+            throw new Error('No ID found!')
+        }
+
+        if (typeof id !== 'string') {
+            throw new Error('Invalid ID format!')
+        }
+
+        const chat = await Chat.findOne({
+            participants: { $all: [senderId, id] }
+        }).populate('messages')
+
+        if (!chat || chat.messages == undefined) {
+            throw new Error('No messages.')
+        }
+
+        console.log('chat: ' + chat)
+        
+        const messages = chat.messages
+        console.log('chat.messages: ' + chat.messages)
+
         return res.status(200).json({ message: 'Messages found!', messages })
+
     } catch (err) {
         console.error(err.message)
         return res.status(500).json({ message: err.message, messages: [] })
     }
-
 }
