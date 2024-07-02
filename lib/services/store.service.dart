@@ -1,3 +1,4 @@
+import 'package:chat_app/services/dio.service.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -9,6 +10,8 @@ class AuthStorage extends GetxController {
       encryptedSharedPreferences: true,
     ),
   );
+
+  final DioService _dio = DioService();
 
   RxBool logged = false.obs;
 
@@ -64,6 +67,7 @@ class AuthStorage extends GetxController {
 
   Future<void> logout() async {
     await storage.delete(key: 'user');
+    _dio.clearCokies();
     logged.value = false;
   }
 }
