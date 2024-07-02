@@ -10,7 +10,7 @@ export const onRegister = async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPass = await bcrypt.hash(password, salt)
 
-        const avatar = await createAvatar(bottts, { seed: username }).toDataUri()
+        const avatar = await createAvatar(bottts, { seed: username }).toJson()['svg'].toString()
 
         const newUser = await User.create({ fullName, username, avatar, password: hashedPass, gender })
         return res.status(200).json({ message: 'Success creating user', status: 200, user: newUser })
