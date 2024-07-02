@@ -7,12 +7,17 @@ String? loginValidator(String? value) {
   return null;
 }
 
-String? registerValidator(String? value, {TForm? type = TForm.text, List<String>? passwords}) {
+String? registerValidator(String? value,
+    {TForm? type = TForm.text, List<String>? passwords}) {
   if (value == null || value.isEmpty) {
     return 'Fields cannot be empty.';
   } else if (value.length < 6 && type == TForm.password) {
     return 'Password must be at least 6 characters.';
-  } else if (passwords != null && passwords[0] != passwords[1] && type != TForm.password) {
+  } else if (value.length < 6 && type == TForm.username) {
+    return 'Username must be over 6 characters.';
+  } else if (passwords != null &&
+      passwords[0] != passwords[1] &&
+      type != TForm.password) {
     return 'Passwords do not match.';
   }
   return null;
@@ -25,4 +30,4 @@ bool validate(GlobalKey<FormState> formKey) {
   return false;
 }
 
-enum TForm { password, text }
+enum TForm { password, text, username }
