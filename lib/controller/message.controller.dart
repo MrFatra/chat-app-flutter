@@ -1,34 +1,63 @@
+import 'package:chat_app/repository/message.repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:socket_io_client/socket_io_client.dart';
 
+import '../models/message.dart';
 import '../services/socket_io.client.service.dart';
 
 class MessageController extends GetxController {
-  RxList<String> messages = <String>[].obs;
+  final String id;
+
+  MessageController({required this.id});
+
+  RxList<Message> messages = <Message>[].obs;
 
   final SocketController _socketController = Get.find<SocketController>();
-  
-  Socket get socket => _socketController.socket;
-  
+  final MessageRepository _messageRepository = MessageRepository();
 
-  void sendMessage(String message) {
-    if (socket.connected) {
-      socket.emit('new message', message);
+  @override
+  void onInit() async {
+    super.onInit();
+    await getMessage(id);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    newMessages();
+  }
+
+  Future<void> getMessage(String id) async {
+    debugPrint('id getMessage: $id');
+    try {
+    final response = await _messageRepository.getMessage(id);
+    debugPrint(response.toString());
+    messages.value = response;
+    } catch (err) {
+      debugPrint(err.toString());
+    }
+    
+  }
+
+  Future<void> sendMessage(String message, String id) async {
+    final response = await _messageRepository.sendMessage(message, id);
+    debugPrint(response.toString());
+    if (_socketController.socket.connected) {
+      _socketController.socket.emit('new message', response);
     } else {
       debugPrint('Message not sent.');
     }
   }
 
   void newMessages() {
-    if (socket.connected) {
-      socket.on('new message', (data) {
+    debugPrint('test');
+    if (_socketController.socket.connected) {
+      _socketController.socket.on('new message', (data) {
         debugPrint('new message: $data');
-        messages.add(data);
+        messages.add(Message.fromJson(data));
       });
     } else {
       debugPrint('Unable to get messages.');
     }
   }
-
 }
