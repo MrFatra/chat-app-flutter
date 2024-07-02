@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 export const signCookieToken = (userId, res) => {
     try {
         const token = jwt.sign({ userId }, process.env.JWT_TOKEN_KEY, {
-            expiresIn: '2d',
+            expiresIn: '15d',
         })
         if (!token) throw new Error('Token couldn\'t be generated.')
 
