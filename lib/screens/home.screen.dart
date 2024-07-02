@@ -1,16 +1,20 @@
 import 'package:chat_app/controller/contact.controller.dart';
+import 'package:chat_app/screens/chat.screen.dart';
 import 'package:chat_app/services/socket_io.client.service.dart';
 import 'package:chat_app/services/store.service.dart';
 import 'package:chat_app/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../widgets/contact.dart';
+
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final SocketController connectionController = Get.find<SocketController>();
   final AuthStorage _authStorage = Get.find<AuthStorage>();
-  final ContactController _contactController = Get.put<ContactController>(ContactController());
+  final ContactController _contactController =
+      Get.put<ContactController>(ContactController());
 
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -52,20 +56,24 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(() {
-          if (connectionController.socketConnected.value && _contactController.data.value != '') {
+          if (connectionController.socketConnected.value &&
+              _contactController.contacts.isNotEmpty) {
             return Center(
               child: Column(
                 children: [
-                  Text(_contactController.data.value)
                   // list of contact widget
-                  // Expanded(
-                    // child: ListView.builder(
-                    //   itemCount: connectionController.contacts.length,
-                    //   itemBuilder: (context, index) {
-                    //     return ContactWidget();
-                    //   },
-                    // ),
-                  // ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _contactController.contacts.length,
+                      itemBuilder: (context, index) {
+                        final user = _contactController.contacts[index];
+                        return InkWell(
+                            onTap: () => Get.toNamed('/chat',
+                                arguments: {'user': user}),
+                            child: ContactWidget(user: user));
+                      },
+                    ),
+                  ),
                 ],
               ),
             );
