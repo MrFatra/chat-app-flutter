@@ -1,4 +1,3 @@
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:shared_prefs_cookie_store/shared_prefs_cookie_store.dart';
@@ -6,7 +5,6 @@ import 'url.constant.dart';
 
 class DioService {
   late Dio _dio;
-  final CookieJar _cookieJar = CookieJar();
   final SharedPrefCookieStore _cookieStore = SharedPrefCookieStore();
 
   static final DioService _singleton = DioService._internal();
