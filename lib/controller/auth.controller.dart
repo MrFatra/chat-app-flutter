@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../helper/types.dart';
-
 class AuthController extends GetxController {
   final AuthRepository _authRepository = AuthRepository();
   Rx<bool> isLoading = false.obs;

@@ -1,6 +1,5 @@
 import 'package:chat_app/models/user.dart';
 import 'package:chat_app/repository/contact.repository.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ContactController extends GetxController {
