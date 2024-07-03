@@ -16,7 +16,8 @@ class AuthController extends GetxController {
     showLoaderDialog();
     await Future.delayed(const Duration(seconds: 1));
     try {
-      final fetch = await _authRepository.register(credentials);
+      final response = await _authRepository.register(credentials);
+      return response;
     } on DioException catch (err) {
       error = err.toString();
       debugPrint('Error: $err');
