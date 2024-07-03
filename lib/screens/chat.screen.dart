@@ -1,7 +1,9 @@
 import 'package:chat_app/controller/message.controller.dart';
+import 'package:chat_app/widgets/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
   final user = Get.arguments['user'];
@@ -10,6 +12,7 @@ class ChatScreen extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();
   final RxBool atBottom = false.obs;
   bool initialLoad = true;
+  bool userScrolled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +50,23 @@ class ChatScreen extends StatelessWidget {
             _scrollController.position.maxScrollExtent;
       } else {
         atBottom.value = false;
+        userScrolled = true;
       }
     });
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: Obx(() => atBottom.value || messageController.messages.isEmpty
-          ? SizedBox.shrink()
-          : Align(
-            alignment: Alignment(1, .8),
-            child: FloatingActionButton.small(
-                onPressed: scrollToNewMessages,
-                child: const Icon(Icons.arrow_downward, color: Colors.white),
-              ),
-          )),
+      floatingActionButton:
+          Obx(() => atBottom.value || !userScrolled || messageController.messages.isEmpty
+              ? const SizedBox.shrink()
+              : Align(
+                  alignment: const Alignment(1, .8),
+                  child: FloatingActionButton.small(
+                    onPressed: scrollToNewMessages,
+                    child:
+                        const Icon(Icons.arrow_downward, color: Colors.white),
+                  ),
+                )),
       appBar: AppBar(
         title: Text(user.fullName),
       ),
@@ -68,56 +74,28 @@ class ChatScreen extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Obx(() => ListView.builder(
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 2),
+                child: Obx(
+                  () => ListView.builder(
                     controller: _scrollController,
                     itemCount: messageController.messages.length,
                     itemBuilder: (context, index) {
                       final message = messageController.messages[index];
                       final isSender = message.receiverId == user.id;
 
-                      return Align(
-                        alignment: isSender
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Container(
-                          margin:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color:
-                                isSender ? Colors.blueAccent : Colors.grey[300],
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: isSender
-                                ? CrossAxisAlignment.end
-                                : CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                message.message,
-                                style: TextStyle(
-                                    color:
-                                        isSender ? Colors.white : Colors.black),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                message.createdAt.toString(),
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: isSender
-                                      ? Colors.white70
-                                      : Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      return ChatBubble(
+                        isSender: isSender,
+                        message: message.message,
+                        date: message.createdAt,
                       );
                     },
-                  )),
+                  ),
+                ),
+              ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
                   Expanded(
@@ -137,7 +115,7 @@ class ChatScreen extends StatelessWidget {
                           _textController.text, user.id);
                       _textController.clear();
                     },
-                    icon: Icon(Icons.send),
+                    icon: const Icon(Icons.send),
                   ),
                 ],
               ),

@@ -1,5 +1,4 @@
 import 'package:chat_app/controller/contact.controller.dart';
-import 'package:chat_app/screens/chat.screen.dart';
 import 'package:chat_app/services/socket_io.client.service.dart';
 import 'package:chat_app/services/store.service.dart';
 import 'package:chat_app/widgets/alert.dart';
@@ -16,9 +15,6 @@ class HomeScreen extends StatelessWidget {
   final ContactController _contactController =
       Get.put<ContactController>(ContactController());
 
-  final TextEditingController _messageController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  // final RxList<Contacts> contacts = [].obs;
   final isLoading = false.obs;
 
   void logout() async {
@@ -36,7 +32,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat App'),
+        title: const Text('Chat App'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -50,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: logout,
               );
             },
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
